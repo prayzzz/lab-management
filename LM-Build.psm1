@@ -4,8 +4,9 @@ function Publish-Dotnet {
     param(
         [Parameter(Position = 0, Mandatory = $true)] [string] $project,
         [Parameter(Position = 1, Mandatory = $false)] [string] $outputFolder,
-        [Parameter(Position = 2, Mandatory = $false)] [string] $runtime = "linux-x64",        
-        [Parameter(Position = 3, Mandatory = $false)] [string] $configuration = "Release"
+        [Parameter(Position = 2, Mandatory = $false)] [string] $versionSuffix,
+        [Parameter(Position = 3, Mandatory = $false)] [string] $runtime = "linux-x64",        
+        [Parameter(Position = 4, Mandatory = $false)] [string] $configuration = "Release"
     )
     
     Write-Host ""
@@ -15,6 +16,11 @@ function Publish-Dotnet {
     if ($outputFolder) {
         $args = $args += '-o'
         $args = $args += $outputFolder
+    }
+
+    if ($versionSuffix) {
+        $args = $args += '--version-suffix'
+        $args = $args += $versionSuffix
     }
 
     $args = $args += $project
