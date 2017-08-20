@@ -1,13 +1,15 @@
-@{
-    ModuleToProcess   = 'LM-Build.psm1'
+@{    
+    RootModule        = 'Lab-Management.psm1'
     ModuleVersion     = '1.0.0'
-    GUID              = 'B18161EF-D3F4-43FB-A44E-B56E0C55CDD3'
+    GUID              = '14BBD38E-A5DA-4D1E-9831-977F95FDD879'
     Author            = 'Patrick Bachmann (https://github.com/prayzzz)'
     Copyright         = 'Copyright (c) 2017 Patrick Bachmann (https://github.com/prayzzz)'
-    PowerShellVersion = '2.0'
-    Description       = ''
-    FunctionsToExport = @('Publish-Dotnet')
-    VariablesToExport = ''
+    Description       = 'Homelab management module'
+    PowerShellVersion = '3.0'
+    FunctionsToExport = '*'
+    CmdletsToExport   = '*'
+    VariablesToExport = '*'
+    AliasesToExport   = '*'
 
     PrivateData       = @{
         PSData = @{
@@ -16,5 +18,5 @@
             Tags       = @('')
             IconUri    = ''
         }
-    }
-}
+    }    
+}    
