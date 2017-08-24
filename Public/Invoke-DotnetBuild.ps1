@@ -1,4 +1,4 @@
-Function Invoke-DotnetPack {
+Function Invoke-DotnetBuild {
     
     [CmdletBinding()]
     Param(
