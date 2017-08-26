@@ -10,7 +10,7 @@ Function Publish-App {
     # Validate
     If (-Not (Test-Path $Artifact)) {
         Write-Error "Artifact not found"
-        return
+        return 1;
     } 
 
     $AppExecPath = Join-Path $DeployTo $AppExec
