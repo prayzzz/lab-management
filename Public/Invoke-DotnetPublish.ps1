@@ -6,7 +6,8 @@ Function Invoke-DotnetPublish {
         [Parameter(Position = 1, Mandatory = $false)] [string] $OutputFolder,
         [Parameter(Position = 2, Mandatory = $false)] [string] $VersionSuffix,
         [Parameter(Position = 3, Mandatory = $false)] [string] $Runtime = "linux-x64",        
-        [Parameter(Position = 4, Mandatory = $false)] [string] $Configuration = "Release"
+        [Parameter(Position = 4, Mandatory = $false)] [string] $Configuration = "Release",
+        [Parameter(Position = 5, Mandatory = $false)] [switch] $SkipZip
     )
     
     Write-Host ""
@@ -29,4 +30,17 @@ Function Invoke-DotnetPublish {
     Write-Host ""
 
     dotnet $Args
+
+    Test-ExitCode $LASTEXITCODE "dotnet $Args"
+
+    If (-Not $SkipZip) {
+        $Version = Get-VersionFromFile
+        $ZipName = "flatmate-$Version.zip"
+        Write-Host "Creating $ZipName"
+
+        $ProgressPreference = "SilentlyContinue"
+        Compress-Archive -Path publish/* -DestinationPath $ZipName -Force  | Out-Null
+        
+        Test-ExitCode $LASTEXITCODE "Compress-Archive -Path publish/* -DestinationPath $ZipName -Force  | Out-Null"
+    }
 }
