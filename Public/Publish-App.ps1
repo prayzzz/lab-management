@@ -4,7 +4,8 @@ Function Publish-App {
     Param(
         [Parameter(Position = 0, Mandatory = $true)] [string] $Artifact,
         [Parameter(Position = 1, Mandatory = $true)] [string] $DeployTo,
-        [Parameter(Position = 2, Mandatory = $true)] [string] $AppExec
+        [Parameter(Position = 2, Mandatory = $true)] [string] $AppExec,
+        [Parameter(Position = 3, Mandatory = $false)] [string] $AppExecArgs
     )
 
     # Validate
@@ -37,5 +38,5 @@ Function Publish-App {
     }
 
     Write-Host "Start instance..."        
-    Start-App $AppExecPath
+    Start-App $AppExecPath $AppExecArgs
 }
