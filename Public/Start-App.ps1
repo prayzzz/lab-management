@@ -8,7 +8,7 @@ Function Start-App {
 
     if (!(Test-Path $AppExec)) {
         Write-Error "App not found"
-        exit 1
+        return 1
     }
 
     # start process
