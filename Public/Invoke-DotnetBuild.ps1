@@ -3,7 +3,7 @@ Function Invoke-DotnetBuild {
     [CmdletBinding()]
     Param(
         [Parameter(Position = 0, Mandatory = $true)] [string] $Project,
-        [Parameter(Position = 4, Mandatory = $false)] [string] $Configuration = "Release"
+        [Parameter(Position = 1, Mandatory = $false)] [string] $Configuration = "Release"
     )
     
     Write-Host ""

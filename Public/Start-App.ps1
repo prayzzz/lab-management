@@ -2,11 +2,11 @@ Function Start-App {
 
     [CmdletBinding()]
     Param(
-        [Parameter(Position = 0, Mandatory = $true)] [string] $App,
+        [Parameter(Position = 0, Mandatory = $true)] [string] $AppExec,
         [Parameter(Position = 1, Mandatory = $false)] [string] $Args
     )
 
-    if (!(Test-Path $App)) {
+    if (!(Test-Path $AppExec)) {
         Write-Error "App not found"
         exit 1
     }
@@ -14,15 +14,15 @@ Function Start-App {
     # start process
     $Process = $null;
     if ($Args) {
-        $Process = Start-Process $App $Args -passthru        
+        $Process = Start-Process $AppExec $Args -passthru        
     }
     else {
-        $Process = Start-Process $App -passthru    
+        $Process = Start-Process $AppExec -passthru    
     }
 
-    Write-Host "Started $App $Args"
+    Write-Host "Started $AppExec $Args"
     Write-Host "ProcessId  $($Process.Id)"
 
     # write pid file
-    $Process.Id | Out-File "$($App).pid"
+    $Process.Id | Out-File "$($AppExec).pid"
 }

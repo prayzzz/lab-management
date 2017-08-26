@@ -2,14 +2,14 @@ Function Stop-App {
     
     [CmdletBinding()]
     Param(
-        [Parameter(Position = 0, Mandatory = $true)] [string] $App
+        [Parameter(Position = 0, Mandatory = $true)] [string] $AppExec
     )
     
-    $PidFile = "$($App).pid"
+    $PidFile = "$($AppExec).pid"
 
     if (!(Test-Path $PidFile)) {
-        Write-Error "$PidFile not found"
-        exit 1
+        Write-Warning "$PidFile not found"
+        exit 0;
     }
     
     # read process id
