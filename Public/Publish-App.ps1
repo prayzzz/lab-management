@@ -8,7 +8,7 @@ Function Publish-App {
     )
 
     # Validate
-    If (Test-Path $Artifact) {
+    If (-Not (Test-Path $Artifact)) {
         Write-Error "Artifact not found"
         return
     } 
