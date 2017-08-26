@@ -8,9 +8,8 @@ Function Publish-App {
 
     Write-Host "Stop running instance..."
     Stop-App -App $AppExec
-    Test-ExitCode $LASTEXITCODE "Stop-App"
-    
 
+    
     Write-Host "Expanding new version..."
     $Folder = (Get-Item $Artifact).Basename    
     If (Test-Path $Folder) {
@@ -18,11 +17,14 @@ Function Publish-App {
     }    
     $ProgressPreference = "SilentlyContinue"
     Expand-Archive -Path $Artifact -DestinationPath $Folder -Force
-    Test-ExitCode $LASTEXITCODE "Expand-Archive"
 
-
-    Write-Host "Start instance..."
+    Write-Host "Start instance..."    
     $AppExecPath = Join-Path $Folder $AppExec
+    
+    If ($ENV:OS -Ne "Windows_NT") {
+        Write-Host "Apply file permission"
+        chmod 755 $AppExecPath        
+    }
+
     Start-App $AppExecPath
-    Test-ExitCode $LASTEXITCODE "Start-App"
 }

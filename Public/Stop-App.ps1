@@ -9,7 +9,7 @@ Function Stop-App {
 
     if (!(Test-Path $PidFile)) {
         Write-Warning "$PidFile not found"
-        return 0;
+        return;
     }
     
     # read process id
