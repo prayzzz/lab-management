@@ -25,13 +25,8 @@ Function Invoke-DotnetPublish {
     }
 
     $Args = $Args += $project
-    
-    Write-Host "Running dotnet $Args"
-    Write-Host ""
 
-    dotnet $Args
-
-    Test-ExitCode $LASTEXITCODE "dotnet $Args"
+    Start-ProcessSafe "dotnet $Args"
 
     If (-Not $SkipZip) {
         $Version = Get-VersionFromFile
@@ -40,7 +35,5 @@ Function Invoke-DotnetPublish {
 
         $ProgressPreference = "SilentlyContinue"
         Compress-Archive -Path publish/* -DestinationPath $ZipName -Force  | Out-Null
-        
-        Test-ExitCode $LASTEXITCODE "Compress-Archive -Path publish/* -DestinationPath $ZipName -Force  | Out-Null"
     }
 }

@@ -24,9 +24,9 @@ Function Publish-SupervisorApp {
     
 
     # Stop
-    Write-Host "Stop running instance..."
-    supervisorctl stop $AppName
-    
+    Write-Host "Stop running instance..."    
+    Start-ProcessSafe "supervisorctl stop $AppName"
+        
 
     # Expand
     Write-Host "Expanding new version..."
@@ -44,5 +44,5 @@ Function Publish-SupervisorApp {
     chmod 755 $AppExecPath        
 
     Write-Host "Start instance..."        
-    supervisorctl start $AppName
+    Start-ProcessSafe "supervisorctl start $AppName"
 }

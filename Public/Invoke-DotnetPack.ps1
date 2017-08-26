@@ -23,9 +23,6 @@ Function Invoke-DotnetPack {
     }
 
     $Args = $Args += $project
-    
-    Write-Host "Running dotnet $Args"
-    Write-Host ""
 
-    dotnet $Args
+    Start-ProcessSafe "dotnet $Args"
 }

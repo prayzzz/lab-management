@@ -9,11 +9,8 @@ Function Invoke-DotnetBuild {
     Write-Host ""
 
     $Args = @('build', '-c', $Configuration)
-
     $Args = $Args += $project
     
-    Write-Host "Running dotnet $Args"
-    Write-Host ""
+    Start-ProcessSafe "dotnet $Args"
 
-    dotnet $Args
 }
