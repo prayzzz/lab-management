@@ -7,12 +7,20 @@ Function Publish-App {
         [Parameter(Position = 2, Mandatory = $true)] [string] $AppExec
     )
 
-    $AppExecPath = Join-Path $DeployTo $AppExec
+    # Validate
+    If (Test-Path $Artifact) {
+        Write-Error "Artifact not found"
+        return
+    } 
 
+    $AppExecPath = Join-Path $DeployTo $AppExec
+    
+    # Stop
     Write-Host "Stop running instance..."
     Stop-App $AppExecPath
-
     
+
+    # Expand
     Write-Host "Expanding new version..."
     If (Test-Path $DeployTo) {
         Remove-Item $DeployTo -Recurse
@@ -21,10 +29,13 @@ Function Publish-App {
     Expand-Archive -Path $Artifact -DestinationPath $DeployTo -Force
     Remove-Item $Artifact
 
-    Write-Host "Start instance..."    
+
+    # Start
     If ($ENV:OS -Ne "Windows_NT") {
-        Write-Host "Apply file permission"
+        Write-Host "Set $AppExecPath executable"
         chmod 755 $AppExecPath        
     }
+
+    Write-Host "Start instance..."        
     Start-App $AppExecPath
 }
