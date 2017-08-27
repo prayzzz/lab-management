@@ -15,8 +15,7 @@ Function Invoke-DotnetPublishApp {
     
     # Write properties for Jenkins
     $Properties = @{
-        "BUILD_VERSION"      = "$Version"; 
-        "BUILD_DISPLAY_NAME" = "$Version";
+        "BUILD_VERSION" = "$Version";
     }
     Write-Properties $Properties ".\build.properties"
 
