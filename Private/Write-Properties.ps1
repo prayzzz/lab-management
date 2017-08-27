@@ -6,5 +6,5 @@ Function Write-Properties {
         [Parameter(Position = 1, Mandatory = $true)] [string] $FileName
     )
 
-    $Properties.GetEnumerator() | ForEach-Object { "$($_.Name)=$($_.Value)" } > $FileName
+    $Properties.GetEnumerator() | ForEach-Object { "$($_.Name)=$($_.Value)" } | Out-File -Encoding ascii $FileName
 }
