@@ -30,7 +30,7 @@ Function Invoke-DotnetPublish {
 
     If (-Not $SkipZip) {
         $Version = Get-VersionFromFile
-        $ZipName = "flatmate-$Version.zip"
+        $ZipName = "$Version.zip"
         Write-Host "Creating $ZipName"
 
         $ProgressPreference = "SilentlyContinue"
