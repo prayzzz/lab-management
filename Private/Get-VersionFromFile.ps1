@@ -6,12 +6,18 @@ Function Get-VersionFromFile {
     )
 
     $FilePath = Join-Path $(Get-Location) $FileName
-    $XmlFile = [xml](Get-Content $FilePath)
+
+    If (-Not (Test-Path $FilePath)) {
+        Write-Warning "$FilePath not found"
+        return
+    }
     
+    $XmlFile = [xml](Get-Content $FilePath)    
     $Version = $XmlFile.Project.PropertyGroup.Version
 
     if (-Not $Version) {
-        throw ("Version not found")
+        Write-Warning "Version not found"
+        return
     }
 
     return $Version

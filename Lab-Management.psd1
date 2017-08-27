@@ -6,7 +6,7 @@
     Copyright         = 'Copyright (c) 2017 Patrick Bachmann (https://github.com/prayzzz)'
     Description       = 'Homelab management module'
     PowerShellVersion = '3.0'
-    FunctionsToExport = @('Invoke-DotnetBuild', 'Invoke-DotnetPack', 'Invoke-DotnetPublish', 'Start-App', 'Stop-App', 'Publish-App', 'Publish-SupervisorApp')
+    FunctionsToExport = @('Invoke-DotnetBuild', 'Invoke-DotnetPack', 'Invoke-DotnetPublish', 'Start-App', 'Stop-App', 'Publish-App', 'Publish-SupervisorApp', 'Invoke-DotnetPublishApp')
     CmdletsToExport   = '*'
     VariablesToExport = '*'
     AliasesToExport   = '*'
