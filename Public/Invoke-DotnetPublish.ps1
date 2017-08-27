@@ -11,20 +11,25 @@ Function Invoke-DotnetPublish {
     )
     
     Write-Host ""
+    
+    # Validation
+    If (-Not (Test-Path $Project)) {
+        throw "$Project not found"
+    }
 
     $Args = @('publish', '-r', $Runtime, '-c', $Configuration)
 
     If ($OutputFolder) {
-        $Args = $Args += '-o'
-        $Args = $Args += $OutputFolder
+        $Args += '-o'
+        $Args += $OutputFolder
     }
 
     If ($VersionSuffix) {
-        $Args = $Args += '--version-suffix'
-        $Args = $Args += $VersionSuffix
+        $Args += '--version-suffix'
+        $Args += $VersionSuffix
     }
 
-    $Args = $Args += $project
+    $Args += $project
 
     Start-ProcessSafe "dotnet $Args"
 

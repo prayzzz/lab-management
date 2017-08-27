@@ -5,24 +5,39 @@ Function Invoke-DotnetPack {
         [Parameter(Position = 0, Mandatory = $true)] [string] $Project,
         [Parameter(Position = 1, Mandatory = $false)] [string] $OutputFolder,
         [Parameter(Position = 2, Mandatory = $false)] [string] $VersionSuffix,
-        [Parameter(Position = 3, Mandatory = $false)] [string] $Configuration = "Release"
+        [Parameter(Position = 3, Mandatory = $false)] [string] $Configuration = "Release",
+        [Parameter(Position = 4, Mandatory = $false)] [switch] $NoRestore,
+        [Parameter(Position = 5, Mandatory = $false)] [switch] $NoBuild
     )
     
     Write-Host ""
 
-    $Args = @('pack', '-c', $Configuration)
+    # Validation
+    If (-Not (Test-Path $Project)) {
+        throw "$Project not found"
+    }
+
+    $Args = @('pack', '--configuration', $Configuration)
 
     If ($OutputFolder) {
-        $Args = $Args += '-o'
-        $Args = $Args += $OutputFolder
+        $Args += '--output'
+        $Args += $OutputFolder
     }
 
     If ($VersionSuffix) {
-        $Args = $Args += '--version-suffix'
-        $Args = $Args += $VersionSuffix
+        $Args += '--version-suffix'
+        $Args += $VersionSuffix
     }
 
-    $Args = $Args += $project
+    If ($NoRestore) {
+        $Args += '--no-restore'
+    }
+
+    If ($NoBuild) {
+        $Args += '--no-build'
+    }
+
+    $Args += $project
 
     Start-ProcessSafe "dotnet $Args"
 }

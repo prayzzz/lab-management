@@ -8,8 +8,13 @@ Function Invoke-DotnetBuild {
     
     Write-Host ""
 
-    $Args = @('build', '-c', $Configuration)
-    $Args = $Args += $project
+    # Validation
+    If (-Not (Test-Path $Project)) {
+        throw "$Project not found"
+    }
+
+    $Args = @('build', '--configuration', $Configuration, '--no-incremental', '--force')
+    $Args += $project
     
     Start-ProcessSafe "dotnet $Args"
 

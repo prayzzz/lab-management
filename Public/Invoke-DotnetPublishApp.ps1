@@ -10,6 +10,11 @@ Function Invoke-DotnetPublishApp {
     )
 
     Write-Host ""
+    
+    # Validation
+    If (-Not (Test-Path $Project)) {
+        throw "$Project not found"
+    }
 
     $Version = [System.DateTime]::Now.ToString("yyyy.MM.dd") + "." + [System.Math]::Round([System.DateTime]::Now.TimeOfDay.TotalMinutes)
     
@@ -20,15 +25,15 @@ Function Invoke-DotnetPublishApp {
     Write-Properties $Properties ".\build.properties"
 
     # Build command args
-    $Args = @('publish', '-r', $Runtime, '-c', $Configuration)
+    $Args = @('publish', '--runtime', $Runtime, '--configuration', $Configuration)
 
     If ($OutputFolder) {
-        $Args = $Args += '-o'
-        $Args = $Args += $OutputFolder
+        $Args += '-o'
+        $Args += $OutputFolder
     }
 
-    $Args = $Args += "/property:version=$Version"
-    $Args = $Args += $project
+    $Args += "/property:version=$Version"
+    $Args += $project
 
     # Publish app
     Start-ProcessSafe "dotnet $Args"

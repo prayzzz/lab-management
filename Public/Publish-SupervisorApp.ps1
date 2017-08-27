@@ -10,16 +10,14 @@ Function Publish-SupervisorApp {
 
     # Validate
     If ($ENV:OS -Eq "Windows_NT") {
-        Write-Error "Windows is not supported"
-        exit 1      
+        throw "Windows is not supported"
     }
 
     which supervisorctl
     Test-ExitCode $LASTEXITCODE "which supervisorctl"
 
     If (-Not (Test-Path $Artifact)) {
-        Write-Error "Artifact not found"
-        exit 1
+        throw "$Artifact not found"
     } 
     
 

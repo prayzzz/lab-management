@@ -12,6 +12,7 @@
         'Invoke-DotnetPack',
         'Invoke-DotnetPublish',        
         'Invoke-DotnetPublishApp',
+        'Invoke-DotnetTest',
         'Publish-SupervisorApp')
     CmdletsToExport   = '*'
     VariablesToExport = '*'

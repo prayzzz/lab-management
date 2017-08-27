@@ -8,6 +8,11 @@ Function Invoke-DotnetBuildApp {
     )
 
     Write-Host ""
+    
+    # Validation
+    If (-Not (Test-Path $Project)) {
+        throw "$Project not found"
+    }
 
     $Version = [System.DateTime]::Now.ToString("yyyy.MM.dd") + "." + [System.Math]::Round([System.DateTime]::Now.TimeOfDay.TotalMinutes)
     
@@ -18,10 +23,10 @@ Function Invoke-DotnetBuildApp {
     Write-Properties $Properties ".\build.properties"
 
     # Build command args
-    $Args = @('build', '-r', $Runtime, '-c', $Configuration)
+    $Args = @('build', '--configuration', $Configuration, '--force')
 
-    $Args = $Args += "/property:version=$Version"
-    $Args = $Args += $project
+    $Args += "/property:version=$Version"
+    $Args += $project
 
     # Build app
     Start-ProcessSafe "dotnet $Args"

@@ -16,13 +16,11 @@ Function Start-ProcessSafe {
         Write-Host "Exit Code: $LASTEXITCODE"
 
         if ($LASTEXITCODE -Ne 0) {
-            Write-Error "Command failed"
-            Exit $LASTEXITCODE
+            throw "Command failed"
         }
     }
     Catch [Exception] {
-        Write-Error "Command failed"
-        Exit $LASTEXITCODE;
+        throw "Command failed"
     }
 
 }
