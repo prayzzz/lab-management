@@ -23,7 +23,7 @@ Function Invoke-DotnetBuildApp {
     Write-Properties $Properties ".\build.properties"
 
     # Build command args
-    $Args = @('build', '--configuration', $Configuration, '--force')
+    $Args = @('build', '--configuration', $Configuration, '--no-incremental', '--force')
 
     $Args += "/property:version=$Version"
     $Args += $project
