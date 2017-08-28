@@ -4,7 +4,8 @@ Function Invoke-DotnetBuildApp {
     Param(
         [Parameter(Position = 0, Mandatory = $true)] [string] $Project,
         [Parameter(Position = 1, Mandatory = $false)] [string] $Runtime = "linux-x64",        
-        [Parameter(Position = 2, Mandatory = $false)] [string] $Configuration = "Release"
+        [Parameter(Position = 2, Mandatory = $false)] [string] $Configuration = "Release",
+        [Parameter(Position = 3, Mandatory = $false)] [string] $VersionSuffix
     )
 
     Write-Host ""
@@ -15,6 +16,10 @@ Function Invoke-DotnetBuildApp {
     }
 
     $Version = [System.DateTime]::Now.ToString("yyyy.MM.dd") + "." + [System.Math]::Round([System.DateTime]::Now.TimeOfDay.TotalMinutes)
+
+    If ($VersionSuffix) {
+        $Version += "-$VersionSuffix"
+    }
     
     # Write properties for Jenkins
     $Properties = @{
