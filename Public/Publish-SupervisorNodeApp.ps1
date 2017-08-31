@@ -24,7 +24,7 @@ Function Publish-SupervisorNodeApp {
     # Expand
     Write-Host "Pulling new version..."
     If (Test-Path $DeployTo) {
-        Remove-Item $DeployTo -Recurse
+        Remove-Item $DeployTo -Recurse -Force
     }    
 
     Start-ProcessSafe "git clone $GitRepository $DeployTo"

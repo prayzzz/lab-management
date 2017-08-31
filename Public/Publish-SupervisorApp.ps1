@@ -29,7 +29,7 @@ Function Publish-SupervisorApp {
     # Expand
     Write-Host "Expanding new version..."
     If (Test-Path $DeployTo) {
-        Remove-Item $DeployTo -Recurse
+        Remove-Item $DeployTo -Recurse -Force
     }    
     $ProgressPreference = "SilentlyContinue"
     Expand-Archive -Path $Artifact -DestinationPath $DeployTo -Force
