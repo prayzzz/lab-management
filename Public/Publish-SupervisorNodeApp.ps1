@@ -4,7 +4,7 @@ Function Publish-SupervisorNodeApp {
     Param(
         [Parameter(Position = 0, Mandatory = $true)] [string] $GitRepository,
         [Parameter(Position = 1, Mandatory = $true)] [string] $DeployTo,
-        [Parameter(Position = 3, Mandatory = $true)] [string] $AppName
+        [Parameter(Position = 2, Mandatory = $true)] [string] $AppName
     )
 
     # Validate
@@ -15,11 +15,7 @@ Function Publish-SupervisorNodeApp {
     which supervisorctl
     Test-ExitCode $LASTEXITCODE "which supervisorctl"
 
-    If (-Not (Test-Path $Artifact)) {
-        throw "$Artifact not found"
-    } 
     
-
     # Stop
     Write-Host "Stop running instance..."    
     Start-ProcessSafe "supervisorctl stop $AppName"
