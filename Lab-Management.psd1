@@ -13,7 +13,8 @@
         'Invoke-DotnetPublish',        
         'Invoke-DotnetPublishApp',
         'Invoke-DotnetTest',
-        'Publish-SupervisorApp')
+        'Publish-SupervisorApp',
+        'Publish-SupervisorNodeApp')
     CmdletsToExport   = '*'
     VariablesToExport = '*'
     AliasesToExport   = '*'
