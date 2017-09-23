@@ -9,6 +9,15 @@ Function Backup-MsSqlDatabase {
         [Parameter(Position = 4, Mandatory = $true)] [String] $BackupFolder
     )
 
+    If ($ENV:OS -Eq "Windows_NT") {
+        where supervisorctl
+        Test-ExitCode $LASTEXITCODE "where supervisorctl"
+    }
+    Else {
+        which supervisorctl
+        Test-ExitCode $LASTEXITCODE "which supervisorctl"       
+    }
+
     $Date = [System.DateTime]::Now.ToString("yyyy.MM.dd") + "." + [System.Math]::Round([System.DateTime]::Now.TimeOfDay.TotalMinutes)
     
     $BackupFileName = "${DatabaseName}_${Date}.bak"
