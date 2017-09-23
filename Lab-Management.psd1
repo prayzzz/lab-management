@@ -7,6 +7,7 @@
     Description       = 'Homelab management module'
     PowerShellVersion = '3.0'
     FunctionsToExport = @(
+        'Backup-MsSqlDatabase',
         'Invoke-DotnetBuild', 
         'Invoke-DotnetBuildApp',    
         'Invoke-DotnetPack',
