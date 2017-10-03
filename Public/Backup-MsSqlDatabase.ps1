@@ -28,4 +28,6 @@ Function Backup-MsSqlDatabase {
     
     Start-ProcessSafe "sqlcmd $Args"
 
+    Start-ProcessSafe "chmod +r $BackupPath"
+
 }
