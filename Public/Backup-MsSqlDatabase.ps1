@@ -15,7 +15,7 @@ Function Backup-MsSqlDatabase {
     }
     Else {
         Invoke-Expression "which sqlcmd"
-        Test-ExitCode $LASTEXITCODE "/bin/which sqlcmd"       
+        Test-ExitCode $LASTEXITCODE "which sqlcmd"       
     }
 
     $Date = [System.DateTime]::Now.ToString("yyyy.MM.dd") + "." + [System.Math]::Round([System.DateTime]::Now.TimeOfDay.TotalMinutes)
