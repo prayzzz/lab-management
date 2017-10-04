@@ -10,12 +10,12 @@ Function Backup-MsSqlDatabase {
     )
 
     If ($ENV:OS -Eq "Windows_NT") {
-        cmd /C where sqlcmd | Out-Null
+        Invoke-Expression "cmd /C where sqlcmd" | Out-Null
         Test-ExitCode $LASTEXITCODE "cmd /C where sqlcmd"
     }
     Else {
-        which sqlcmd
-        Test-ExitCode $LASTEXITCODE "which sqlcmd"       
+        Invoke-Expression "which sqlcmd"
+        Test-ExitCode $LASTEXITCODE "/bin/which sqlcmd"       
     }
 
     $Date = [System.DateTime]::Now.ToString("yyyy.MM.dd") + "." + [System.Math]::Round([System.DateTime]::Now.TimeOfDay.TotalMinutes)
