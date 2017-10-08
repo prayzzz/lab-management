@@ -15,7 +15,9 @@ Function Invoke-DotnetBuildApp {
         throw "$Project not found"
     }
 
-    $Version = [System.DateTime]::Now.ToString("yyyy.MM.dd") + "." + [System.Math]::Round([System.DateTime]::Now.TimeOfDay.TotalMinutes)
+    $GitDateOfLastCommit = git log -1 --format=%cd
+    $DateOfLastCommit = [System.DateTimeOffset]::ParseExact($GitDateOfLastCommit, "ddd MMM d HH:mm:ss yyyy K", [System.Globalization.CultureInfo]::InvariantCulture)
+    $Version = $DateOfLastCommit.ToString("yyyy.MM.dd") + "." + [System.Math]::Round($DateOfLastCommit.TimeOfDay.TotalMinutes)
 
     If ($VersionSuffix) {
         $Version += "-$VersionSuffix"
