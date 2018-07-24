@@ -1,28 +1,25 @@
-Function Publish-FromTeamcity {    
+Function Publish-ArtifactFromUrl {    
 
     [CmdletBinding()]
     Param(
         [Parameter(Position = 0, Mandatory = $true)] [string] $Name,
-        [Parameter(Position = 1, Mandatory = $true)] [string] $Version,
-        [Parameter(Position = 2, Mandatory = $true)] [string] $BuildId
+        [Parameter(Position = 2, Mandatory = $true)] [string] $ArtifactUrl
     )
 
-    $TeamCityArtifactBase = "http://build.russianbee.de/guestAuth/app/rest/builds/id:{0}/artifacts/content/{1}"
 
     $AppFolder = "/opt/$Name"    
-    $ArtifactName = ("{0}-{1}" -f $Name, $Version)
-    $ArtifactFile = "$ArtifactName.zip"
+    $ArtifactFile = "$Name.zip"
     $DownloadedArtifactPath = "/tmp/$($ArtifactFile)"
 
+
     # Download
-    $ArtifactUrl = ($TeamCityArtifactBase -f $BuildId, $ArtifactFile)
     Write-Host "Downloading artifact from $ArtifactUrl"
 
     If (Test-Path $DownloadedArtifactPath) {
         Remove-Item $DownloadedArtifactPath -Force
     } 
     
-    $DownloadCommand = "wget $ArtifactUrl -O $($DownloadedArtifactPath)"
+    $DownloadCommand = "wget $ArtifactUrl -O $DownloadedArtifactPath"
     Invoke-Expression $DownloadCommand
     if (!($LASTEXITCODE -eq 0)) {
         Write-Host "Error executing '$DownloadCommand'" -foregroundcolor Red
