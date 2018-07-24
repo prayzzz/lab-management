@@ -8,7 +8,7 @@
     PowerShellVersion = '3.0'
     FunctionsToExport = @(
         'Backup-MsSqlDatabase'
-        'Publish-FromTeamcity')
+        'Publish-ArtifactFromUrl')
     CmdletsToExport   = '*'
     VariablesToExport = '*'
     AliasesToExport   = '*'
