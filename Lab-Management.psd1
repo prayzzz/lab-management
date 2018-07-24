@@ -3,19 +3,12 @@
     ModuleVersion     = '1.0.0'
     GUID              = '14BBD38E-A5DA-4D1E-9831-977F95FDD879'
     Author            = 'Patrick Bachmann (https://github.com/prayzzz)'
-    Copyright         = 'Copyright (c) 2017 Patrick Bachmann (https://github.com/prayzzz)'
+    Copyright         = 'Copyright (c) 2018 Patrick Bachmann (https://github.com/prayzzz)'
     Description       = 'Homelab management module'
     PowerShellVersion = '3.0'
     FunctionsToExport = @(
-        'Backup-MsSqlDatabase',
-        'Invoke-DotnetBuild', 
-        'Invoke-DotnetBuildApp',    
-        'Invoke-DotnetPack',
-        'Invoke-DotnetPublish',        
-        'Invoke-DotnetPublishApp',
-        'Invoke-DotnetTest',
-        'Publish-SupervisorApp',
-        'Publish-SupervisorNodeApp')
+        'Backup-MsSqlDatabase'
+        'Publish-FromTeamcity')
     CmdletsToExport   = '*'
     VariablesToExport = '*'
     AliasesToExport   = '*'
