@@ -1,4 +1,4 @@
-Function Publish-DotNetCore {    
+Function Publish-FromTeamcity {    
 
     [CmdletBinding()]
     Param(
