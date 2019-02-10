@@ -11,14 +11,16 @@ Function Backup-MsSqlDatabase {
 
     Write-Header "Backup $DatabaseName"
 
-    Invoke-Expression "which sqlcmd"
-    Test-ExitCode $LASTEXITCODE "which sqlcmd"       
+    which sqlcmd
+    if ($LASTEXITCODE -ne 0) {
+        throw "sqlcmd missing"
+    }
 
     $Date = [System.DateTime]::Now.ToString("yyyy.MM.dd") + "." + [System.Math]::Round([System.DateTime]::Now.TimeOfDay.TotalMinutes)
     
     $BackupFileName = "${DatabaseName}_${Date}.bak"
     $BackupPath = Join-Path $BackupFolder "${DatabaseName}/${BackupFileName}"
-    $BackupScript = "`"BACKUP DATABASE [${DatabaseName}] TO DISK = N'${BackupPath}' WITH COMPRESSION`""
+    $BackupScript = "`"BACKUP DATABASE [${DatabaseName}] TO DISK = N'${BackupPath}' WITH STATS = 10 `""
     
     $Args = @('-H', $Hostname, '-U', $Username, '-P', $Password, '-Q', $BackupScript)
     
