@@ -9,25 +9,20 @@ Function Backup-MsSqlDatabase {
         [Parameter(Position = 4, Mandatory = $true)] [String] $BackupFolder
     )
 
-    If ($ENV:OS -Eq "Windows_NT") {
-        Invoke-Expression "cmd /C where sqlcmd" | Out-Null
-        Test-ExitCode $LASTEXITCODE "cmd /C where sqlcmd"
-    }
-    Else {
-        Invoke-Expression "which sqlcmd"
-        Test-ExitCode $LASTEXITCODE "which sqlcmd"       
-    }
+    Write-Header "Backup $DatabaseName"
+
+    Invoke-Expression "which sqlcmd"
+    Test-ExitCode $LASTEXITCODE "which sqlcmd"       
 
     $Date = [System.DateTime]::Now.ToString("yyyy.MM.dd") + "." + [System.Math]::Round([System.DateTime]::Now.TimeOfDay.TotalMinutes)
     
     $BackupFileName = "${DatabaseName}_${Date}.bak"
     $BackupPath = Join-Path $BackupFolder "${DatabaseName}/${BackupFileName}"
-    $BackupScript = "`"BACKUP DATABASE [${DatabaseName}] TO DISK = N'${BackupPath}'`""
+    $BackupScript = "`"BACKUP DATABASE [${DatabaseName}] TO DISK = N'${BackupPath}' WITH COMPRESSION`""
     
     $Args = @('-H', $Hostname, '-U', $Username, '-P', $Password, '-Q', $BackupScript)
     
     Start-ProcessSafe "sqlcmd $Args"
 
     Start-ProcessSafe "chmod +r $BackupPath"
-
 }

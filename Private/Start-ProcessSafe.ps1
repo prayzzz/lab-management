@@ -6,8 +6,6 @@ Function Start-ProcessSafe {
     )
 
     Try {
-        $Global:LASTEXITCODE = 0
-
         Write-Host "Execute command: $Command"
         Write-Host ""
 

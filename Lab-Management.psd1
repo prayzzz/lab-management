@@ -8,7 +8,8 @@
     PowerShellVersion = '3.0'
     FunctionsToExport = @(
         'Backup-MsSqlDatabase'
-        'Publish-ArtifactFromUrl')
+        'Publish-ArtifactFromUrl'
+        'Publish-DotNetCore')
     CmdletsToExport   = '*'
     VariablesToExport = '*'
     AliasesToExport   = '*'
