@@ -3,6 +3,7 @@ Function Publish-DotNetCore {
     [CmdletBinding()]
     param(    
         [Parameter(Mandatory = $true, Position = 0)] [string] $Name,
+        [Parameter(Mandatory = $true, Position = 1)] [string] $Server,
         [string] $Project = ""
     )
 
@@ -13,9 +14,12 @@ Function Publish-DotNetCore {
     $ArtifactOutput = Join-Path $Current "$Name.zip"
 
 
-    Write-Header "Building Project"
+    Write-Header "Building $Name"
 
-    dotnet publish $Project --output $PublishFolder --configuration Release
+    dotnet publish $Project --output $PublishFolder --configuration Release --runtime linux-x64 --self-contained
+    if ($LASTEXITCODE -ne 0) {
+        throw "Building $Name failed"
+    }
 
 
     Write-Header "Compressing"
@@ -33,12 +37,12 @@ Function Publish-DotNetCore {
 
     Write-Header "Transfer To Remote"
 
-    scp $ArtifactOutput app01.server.home:/opt/
+    scp $ArtifactOutput "$($Server):/opt/"
 
 
     Write-Header "Exeuting Remote Deplyoment"
 
-    ssh app01.server.home "cd /opt && pwsh /opt/deploy.ps1 -Name $Name"
+    ssh $($Server) "cd /opt && pwsh /opt/deploy.ps1 -Name $Name"
 
 
     Write-Header "Cleanup"
